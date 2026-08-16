@@ -20,8 +20,11 @@ async function mapLimit<T, R>(
       const item = items[index] as T;
       try {
         results.push(await fn(item));
-      } catch {
-        /* skip symbols the feed rejects */
+      } catch (e) {
+        console.warn(
+          "[scanner] skipped symbol",
+          e instanceof Error ? e.message : e,
+        );
       }
       onEach?.();
     }
